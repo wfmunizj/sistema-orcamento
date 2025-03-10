@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Ordem de Serviço</title>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+        <style>
+          :root {
+            --primary: #2563EB;
+            --primary-hover: #1D4ED8;
+            --secondary: #4B5563;
+            --background: #F9FAFB;
+            --card-bg: #FFFFFF;
+            --border: #E5E7EB;
+          }
+      
+          * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+          }
+      
+          body {
+            background-color: var(--background);
+            font-family: 'Inter', sans-serif;
+            color: var(--secondary);
+            line-height: 1.5;
+          }
+      
+          .container {
+            padding: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+          }
+      
+          .header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            padding: 1rem 0;
+            border-bottom: 2px solid var(--border);
+          }
+      
+          .header-icon {
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+          }
+      
+          .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+          }
+      
+          h1 {
+            font-size: 1.875rem;
+            font-weight: 700;
+            color: #111827;
+          }
+      
+          h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #111827;
+            margin: 2rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border);
+          }
+      
+          h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #111827;
+          }
+      
+          .grid {
+            display: grid;
+            gap: 1.5rem;
+          }
+      
+          .grid-cols-1 { grid-template-columns: repeat(1, 1fr); }
+          .grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
+          .grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
+          .grid-cols-4 { grid-template-columns: repeat(4, 1fr); }
+      
+          @media (max-width: 768px) {
+            .grid-cols-2, .grid-cols-3, .grid-cols-4 {
+              grid-template-columns: 1fr;
+            }
+            
+            .container {
+              padding: 1rem;
+            }
+            
+            .card {
+              padding: 1.5rem;
+            }
+          }
+      
+          input, select, textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 0.875rem;
+            transition: border-color 0.2s, box-shadow 0.2s;
+          }
+      
+          input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+          }
+      
+          label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: #374151;
+          }
+      
+          table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--card-bg);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+          }
+      
+          th, td {
+            padding: 0.75rem;
+            text-align: left;
+            font-size: 0.875rem;
+          }
+      
+          th {
+            background-color: #F3F4F6;
+            font-weight: 600;
+            color: #111827;
+          }
+      
+          td {
+            border-top: 1px solid var(--border);
+          }
+      
+          button {
+            background-color: var(--primary);
+            color: white;
+            padding: 0.875rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            width: 100%;
+            margin-top: 1.5rem;
+          }
+      
+          button:hover {
+            background-color: var(--primary-hover);
+          }
+      
+          .table-container {
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+          }
+      
+          #logo {
+            display: none;
+          }
+      
+          .input-group {
+            position: relative;
+          }
+      
+          .input-icon {
+            position: absolute;
+            right: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--secondary);
+            pointer-events: none;
+          }
+      
+          @media print {
+            body * {
+              visibility: hidden;
+            }
+            #form-container, #form-container * {
+              visibility: visible;
+            }
+            #form-container {
+              position: absolute;
+              left: 0;
+              top: 0;
+            }
+          }
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <div class="header">
+            <div class="header-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 7h2a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2h-2"/>
+                <path d="M6 7H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/>
+                <line x1="22" x2="22" y1="11" y2="13"/>
+                <line x1="10" x2="10" y1="7" y2="13"/>
+                <line x1="10" x2="10" y1="17" y2="17.01"/>
+              </svg>
+            </div>
+            <div>
+              <h1>Ordem de Serviço</h1>
+              <p class="text-sm text-secondary">Sistema de gestão de serviços automotivos</p>
+            </div>
+        </div>
+        <div class="card">
+            <div class="grid grid-cols-1" id="form-container">
+              <h2>Informações do Cliente</h2>
+              <div class="grid grid-cols-3 gap-4">
+            <div>
+              <label for="date">Data</label>
+              <input type="date" id="date">
+            </div>
+            <div>
+              <label for="clientName">Nome</label>
+              <input type="text" id="clientName">
+            </div>
+            <div>
+              <label for="phone">Telefone</label>
+              <input type="text" id="phone">
+            </div>
+            <div>
+              <label for="address">Endereço</label>
+              <input type="text" id="address">
+            </div>
+          </div>
+
+          <!-- Informações do Veículo -->
+          <h2>Informações do Veículo</h2>
+          <div class="grid grid-cols-4">
+            <div>
+              <label for="car">Carro</label>
+              <input type="text" id="car">
+            </div>
+            <div>
+              <label for="brand">Marca</label>
+              <input type="text" id="brand">
+            </div>
+            <div>
+              <label for="year">Ano</label>
+              <input type="text" id="year">
+            </div>
+            <div>
+              <label for="color">Cor</label>
+              <input type="text" id="color">
+            </div>
+            <div>
+              <label for="plate">Placa</label>
+              <input type="text" id="plate">
+            </div>
+          </div>
+
+          <!-- Tabelas de Serviços -->
+          <h2>Tabelas de Serviços</h2>
+          <div class="grid grid-cols-2">
+            <!-- Tabela de Funilaria -->
+            <div style="overflow-x: auto;">
+              <h3>Funilaria</h3>
+              <table id="table-bodywork">
+                <thead>
+                  <tr>
+                    <th>Item</th>
+                    <th>Peças</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Linhas serão geradas via JavaScript -->
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Tabela de Pintura -->
+            <div style="overflow-x: auto;">
+              <h3>Pintura</h3>
+              <table id="table-painting">
+                <thead>
+                  <tr>
+                    <th>Item</th>
+                    <th>Valor</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Linhas serão geradas via JavaScript -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Totais -->
+          <h2>Totais</h2>
+          <div class="grid grid-cols-4">
+            <div>
+              <label for="polishingValue">Polimento R$</label>
+              <input type="number" id="polishingValue">
+            </div>
+            <div>
+              <label for="laborValue">Mão de Obra R$</label>
+              <input type="number" id="laborValue">
+            </div>
+            <div>
+              <label for="assemblyTotal">Montagem e Desmontagem R$</label>
+              <input type="number" id="assemblyTotal">
+            </div>
+            <div>
+              <label for="totalValue">Valor Total R$</label>
+              <input type="number" id="totalValue" readonly>
+            </div>
+          </div>
+
+          <!-- Informações Adicionais -->
+          <h2>Informações Adicionais</h2>
+          <div class="grid grid-cols-3">
+            <div>
+              <label for="warranty">Garantia do Serviço (dias)</label>
+              <input type="number" id="warranty">
+            </div>
+            <div>
+              <label for="deliveryDate">Data de Entrega Prevista</label>
+              <input type="date" id="deliveryDate">
+            </div>
+            <div>
+              <label for="paymentMethod">Meio de Pagamento</label>
+              <select id="paymentMethod">
+                <option value="">Selecione</option>
+                <option value="pix">Pix</option>
+                <option value="débito">Débito</option>
+                <option value="outros">Outros</option>
+                <option value="crédito">Crédito</option>
+              </select>
+            </div>
+          </div>
+          <!-- Campo para parcelas se pagamento for crédito -->
+          <div id="installmentsContainer" class="grid grid-cols-1" style="display:none;">
+            <div>
+              <label for="installments">Quantidade de Parcelas</label>
+              <select id="installments">
+                <option value="">Selecione</option>
+                <!-- Gerando opções de 1 a 12 -->
+                <script>
+                  for (let i = 1; i <= 12; i++) {
+                    document.write(`<option value="${i}">${i}x</option>`);
+                  }
+                </script>
+              </select>
+            </div>
+          </div>
+
+          <!-- Observações -->
+          <div>
+            <label for="observations">Observações</label>
+            <textarea id="observations" style="min-height: 100px;"></textarea>
+          </div>
+
+          <!-- Botão Gerar PDF -->
+          <div>
+            <button id="generatePDF">Gerar PDF</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Imagem do logo (oculta) -->
+  <img id="logo" src="assets/logo-garcez-imports.png" alt="Logo">
+
+  <!-- Biblioteca jsPDF via CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script>
+    // Objeto de estado para armazenar os dados
+    const state = {
+      date: "",
+      clientName: "",
+      phone: "",
+      address: "",
+      car: "",
+      brand: "",
+      year: "",
+      color: "",
+      plate: "",
+      warranty: "",
+      deliveryDate: "",
+      observations: "",
+      polishingValue: "",
+      assemblyTotal: "",
+      laborValue: "",
+      totalValue: "0",
+      paymentMethod: "",
+      installments: "",
+      paintingTotal: "0",
+      // Lista de itens de serviço
+      serviceItems: [
+        "Porta Dianteira Ld. Direito",
+        "Porta Traseira Ld. Direito",
+        "Porta Dianteira Ld. Esquerdo",
+        "Porta Traseira Ld.Esquerdo",
+        "Lateral Direita",
+        "Lateral Esquerda",
+        "Para-Lama Direito",
+        "Para-Lama Esquerdo",
+        "Capô",
+        "Painel Diant. c/Frente",
+        "Painel Traseiro. c/Tampa",
+        "Para-Choque Dianteiro",
+        "Para-Choque Traseiro",
+        "Farol c/Pisca Dianteiro",
+        "Lanterna Traseira",
+        "Tampa de Mala Traseira",
+        "Teto",
+        "Retrovisor Direito",
+        "Retrovisor Esquerdo",
+        "Vão de Roda",
+        "Longarina",
+        "Frisos",
+        "Borrachão",
+        "Maçaneta",
+        "Vidros",
+        "Assoalho de Mala",
+        "Churrasqueira"
+      ],
+      bodyworkServices: [],
+      paintingServices: []
+    };
+
+    // Inicializa os arrays de serviços com base na lista de itens
+    state.serviceItems.forEach(item => {
+      state.bodyworkServices.push({ name: item, parts: "" });
+      state.paintingServices.push({ name: item, value: "" });
+    });
+
+    // Função para popular as tabelas de Funilaria e Pintura
+    function populateTables() {
+      const bodyworkTbody = document.querySelector('#table-bodywork tbody');
+      const paintingTbody = document.querySelector('#table-painting tbody');
+      bodyworkTbody.innerHTML = "";
+      paintingTbody.innerHTML = "";
+
+      state.serviceItems.forEach((item, index) => {
+        // Linha para Funilaria
+        const trBody = document.createElement('tr');
+        const tdItem = document.createElement('td');
+        tdItem.textContent = item;
+        const tdSelect = document.createElement('td');
+        const select = document.createElement('select');
+        select.id = 'bodywork-' + index;
+        select.innerHTML = '<option value="">Selecione</option><option value="Trocar">Trocar</option><option value="Recuperar">Recuperar</option>';
+        select.addEventListener('change', (e) => {
+          state.bodyworkServices[index].parts = e.target.value;
+        });
+        tdSelect.appendChild(select);
+        trBody.appendChild(tdItem);
+        trBody.appendChild(tdSelect);
+        bodyworkTbody.appendChild(trBody);
+
+        // Linha para Pintura
+        const trPaint = document.createElement('tr');
+        const tdItemPaint = document.createElement('td');
+        tdItemPaint.textContent = item;
+        const tdInput = document.createElement('td');
+        const input = document.createElement('input');
+        input.type = 'number';
+        input.id = 'painting-' + index;
+        input.addEventListener('input', (e) => {
+          state.paintingServices[index].value = e.target.value;
+          updateTotals();
+        });
+        tdInput.appendChild(input);
+        trPaint.appendChild(tdItemPaint);
+        trPaint.appendChild(tdInput);
+        paintingTbody.appendChild(trPaint);
+      });
+    }
+
+    // Função para atualizar os totais
+    function updateTotals() {
+      let paintingSum = 0;
+      state.paintingServices.forEach(service => {
+        let val = parseFloat(service.value) || 0;
+        paintingSum += val;
+      });
+      state.paintingTotal = paintingSum.toFixed(2);
+      let polish = parseFloat(state.polishingValue) || 0;
+      let assembly = parseFloat(state.assemblyTotal) || 0;
+      let labor = parseFloat(state.laborValue) || 0;
+      let total = polish + assembly + labor + paintingSum;
+      state.totalValue = total.toFixed(2);
+      document.getElementById('totalValue').value = state.totalValue;
+    }
+
+    // Eventos para os campos de entrada
+    document.getElementById('date').addEventListener('input', (e) => { state.date = e.target.value; });
+    document.getElementById('clientName').addEventListener('input', (e) => { state.clientName = e.target.value; });
+    document.getElementById('phone').addEventListener('input', (e) => { state.phone = e.target.value; });
+    document.getElementById('address').addEventListener('input', (e) => { state.address = e.target.value; });
+    document.getElementById('car').addEventListener('input', (e) => { state.car = e.target.value; });
+    document.getElementById('brand').addEventListener('input', (e) => { state.brand = e.target.value; });
+    document.getElementById('year').addEventListener('input', (e) => { state.year = e.target.value; });
+    document.getElementById('color').addEventListener('input', (e) => { state.color = e.target.value; });
+    document.getElementById('plate').addEventListener('input', (e) => { state.plate = e.target.value; });
+    document.getElementById('polishingValue').addEventListener('input', (e) => {
+      state.polishingValue = e.target.value;
+      updateTotals();
+    });
+    document.getElementById('laborValue').addEventListener('input', (e) => {
+      state.laborValue = e.target.value;
+      updateTotals();
+    });
+    document.getElementById('assemblyTotal').addEventListener('input', (e) => {
+      state.assemblyTotal = e.target.value;
+      updateTotals();
+    });
+    document.getElementById('warranty').addEventListener('input', (e) => { state.warranty = e.target.value; });
+    document.getElementById('deliveryDate').addEventListener('input', (e) => { state.deliveryDate = e.target.value; });
+    document.getElementById('observations').addEventListener('input', (e) => { state.observations = e.target.value; });
+    document.getElementById('paymentMethod').addEventListener('change', (e) => {
+      state.paymentMethod = e.target.value;
+      // Exibe ou oculta o campo de parcelas
+      if (state.paymentMethod === "crédito") {
+        document.getElementById('installmentsContainer').style.display = "block";
+      } else {
+        document.getElementById('installmentsContainer').style.display = "none";
+      }
+    });
+    document.getElementById('installments').addEventListener('change', (e) => { state.installments = e.target.value; });
+
+    
+  // Geração do PDF
+  document.getElementById('generatePDF').addEventListener('click', () => {
+    if (!state.totalValue || state.totalValue === "0") {
+      alert("Erro ao gerar PDF: Por favor, preencha o valor total do orçamento.");
+      return;
+    }
+
+    console.log("Iniciando geração do PDF...");
+
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    const logoImg = document.getElementById('logo');
+    const img = new Image();
+    img.src = logoImg.src;
+
+    img.onload = function() {
+      console.log("Imagem carregada com sucesso.");
+      doc.addImage(img, "PNG", 10, 10, 20, 20);
+
+      // Cabeçalho
+      doc.setFontSize(16);
+      doc.text("Funilaria - Pintura - Polimento - Espelhamento", 105, 20, { align: "center" });
+      doc.setFontSize(12);
+      doc.text("Personalização - Pinturas de rodas - Polimento de faróis", 105, 30, { align: "center" });
+      doc.text("R. Antónia Vieira Restolho, 250 - V. Zilda - CEP: 02318-460 - São Paulo", 105, 40, { align: "center" });
+
+      // Informações do Cliente
+      doc.text(`Data: ${state.date}`, 20, 60);
+      doc.text(`Nome: ${state.clientName}`, 20, 67);
+      doc.text(`End.: ${state.address}`, 20, 74);
+      doc.text(`Tel.: ${state.phone}`, 120, 74);
+
+      // Informações do Veículo
+      doc.text(`Ano: ${state.year}`, 20, 81);
+      doc.text(`Carro: ${state.car}`, 20, 88);
+      doc.text(`Marca: ${state.brand}`, 60, 88);
+      doc.text(`Cor: ${state.color}`, 120, 88);
+      doc.text(`Placa: ${state.plate}`, 160, 88);
+
+      // Tabelas de Serviços
+      let yPos = 100;
+      doc.setFontSize(10);
+
+      // Tabela de Funilaria (Item e Peças)
+      doc.setFontSize(14);
+      doc.text("Funilaria:", 20, yPos);
+      doc.setFontSize(10);
+      yPos += 7;
+      state.serviceItems.forEach((item, index) => {
+        const bodywork = state.bodyworkServices[index];
+        // Exibe a linha se houver seleção ou se houver valor na tabela de Pintura
+        if (bodywork.parts || state.paintingServices[index].value) {
+          doc.text(item, 20, yPos);
+          doc.text(bodywork.parts || "", 80, yPos);
+          yPos += 7;
+        }
+      });
+
+      // Tabela de Pintura
+      yPos += 5;
+      doc.setFontSize(14);
+      doc.text("Pintura:", 20, yPos);
+      doc.text("Valor", 80, yPos);
+      doc.setFontSize(10);
+      yPos += 7;
+      state.serviceItems.forEach((item, index) => {
+        const painting = state.paintingServices[index];
+        if (painting.value) {
+          doc.text(item, 20, yPos);
+          doc.text(painting.value || "", 80, yPos);
+          yPos += 7;
+        }
+      });
+
+      // Totais
+      yPos += 10;
+      doc.text(`POLIMENTO R$: ${state.polishingValue}`, 20, yPos);
+      yPos += 7;
+      doc.text(`MÃO DE OBRA R$: ${state.laborValue}`, 20, yPos);
+      yPos += 7;
+      doc.text(`MONTAGEM E DESMONTAGEM R$: ${state.assemblyTotal}`, 20, yPos);
+      yPos += 7;
+      doc.text(`PINTURA R$: ${state.paintingTotal}`, 20, yPos);
+      yPos += 7;
+      doc.text(`VALOR TOTAL R$: ${state.totalValue}`, 20, yPos);
+      yPos += 7;
+
+      // Meio de Pagamento
+      doc.text(`MEIO DE PAGAMENTO: ${state.paymentMethod}`, 20, yPos);
+      yPos += 7;
+      if (state.paymentMethod === "crédito") {
+        doc.text(`PARCELAS: ${state.installments}x`, 20, yPos);
+        yPos += 7;
+      }
+
+      // Rodapé
+      doc.text(`Garantia do Serviço: ${state.warranty} dias úteis`, 20, yPos + 10);
+      doc.text(`Entrega prevista para: ${state.deliveryDate}`, 20, yPos + 24);
+      doc.text(`Obs.: ${state.observations}`, 20, yPos + 31);
+      doc.text("Orçamento válido por 60 dias.", 20, yPos + 38);
+      doc.text("ASS. CLIENTE", 20, yPos + 53);
+      doc.text("FUNILARIA", 170, yPos + 53);
+
+      doc.save("ordem-servico.pdf");
+      console.log("PDF gerado com sucesso.");
+    };
+
+    img.onerror = function() {
+      console.error("Erro ao carregar a imagem.");
+    };
+  });
+
+    // Popula as tabelas ao carregar a página
+    populateTables();
+  </script>
+</body>
+</html>
