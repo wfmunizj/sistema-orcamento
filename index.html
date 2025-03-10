@@ -201,6 +201,27 @@
           top: 0;
         }
       }
+
+      /* Estilos para o ícone "X" nos inputs de busca */
+      .search-container {
+        position: relative;
+        margin-bottom: 0.75rem;
+      }
+      .search-container input {
+        padding-right: 2.5rem; /* Espaço para o ícone */
+      }
+      .clear-search {
+        position: absolute;
+        right: 0.75rem;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        color: var(--secondary);
+        display: none; /* Inicialmente oculto */
+      }
+      .clear-search:hover {
+        color: var(--primary);
+      }
     </style>
   </head>
   <body>
@@ -310,13 +331,16 @@
             <!-- Tabela de Funilaria -->
             <div style="overflow-x: auto;">
               <h3>Funilaria</h3>
-              <!-- Input de busca -->
-              <input
-                type="text"
-                id="search-bodywork"
-                placeholder="Buscar item..."
-                style="margin-bottom: 0.75rem; padding: 0.5rem; border: 1px solid var(--border); border-radius: 4px;"
-              />
+              <!-- Input de busca com ícone "X" -->
+              <div class="search-container">
+                <input
+                  type="text"
+                  id="search-bodywork"
+                  placeholder="Buscar item..."
+                  style="padding-right: 2.5rem;"
+                />
+                <span class="clear-search" id="clear-bodywork">✕</span>
+              </div>
               <table id="table-bodywork">
                 <thead>
                   <tr>
@@ -333,13 +357,16 @@
             <!-- Tabela de Pintura -->
             <div style="overflow-x: auto;">
               <h3>Pintura</h3>
-              <!-- Input de busca -->
-              <input
-                type="text"
-                id="search-painting"
-                placeholder="Buscar item..."
-                style="margin-bottom: 0.75rem; padding: 0.5rem; border: 1px solid var(--border); border-radius: 4px;"
-              />
+              <!-- Input de busca com ícone "X" -->
+              <div class="search-container">
+                <input
+                  type="text"
+                  id="search-painting"
+                  placeholder="Buscar item..."
+                  style="padding-right: 2.5rem;"
+                />
+                <span class="clear-search" id="clear-painting">✕</span>
+              </div>
               <table id="table-painting">
                 <thead>
                   <tr>
@@ -572,16 +599,31 @@
       }
 
       // Eventos para os campos de busca
-      document
-        .getElementById("search-bodywork")
-        .addEventListener("input", function (e) {
-          filterTable("table-bodywork", e.target.value);
-        });
-      document
-        .getElementById("search-painting")
-        .addEventListener("input", function (e) {
-          filterTable("table-painting", e.target.value);
-        });
+      const searchBodywork = document.getElementById("search-bodywork");
+      const searchPainting = document.getElementById("search-painting");
+      const clearBodywork = document.getElementById("clear-bodywork");
+      const clearPainting = document.getElementById("clear-painting");
+
+      searchBodywork.addEventListener("input", function (e) {
+        filterTable("table-bodywork", e.target.value);
+        clearBodywork.style.display = e.target.value ? "block" : "none";
+      });
+      searchPainting.addEventListener("input", function (e) {
+        filterTable("table-painting", e.target.value);
+        clearPainting.style.display = e.target.value ? "block" : "none";
+      });
+
+      // Limpar campo de busca
+      clearBodywork.addEventListener("click", () => {
+        searchBodywork.value = "";
+        filterTable("table-bodywork", "");
+        clearBodywork.style.display = "none";
+      });
+      clearPainting.addEventListener("click", () => {
+        searchPainting.value = "";
+        filterTable("table-painting", "");
+        clearPainting.style.display = "none";
+      });
 
       // Eventos para os campos de entrada
       document.getElementById("date").addEventListener("input", (e) => {
