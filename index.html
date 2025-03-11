@@ -287,28 +287,28 @@
               <label for="brand">Marca</label>
               <select id="brand">
                 <option value="">Selecione a marca</option>
+                <option value="Audi">Audi</option>
+                <option value="BMW">BMW</option>
+                <option value="Chery">Chery</option>
                 <option value="Chevrolet">Chevrolet</option>
+                <option value="Citroën">Citroën</option>
                 <option value="Fiat">Fiat</option>
-                <option value="Volkswagen">Volkswagen</option>
                 <option value="Ford">Ford</option>
                 <option value="Honda">Honda</option>
-                <option value="Toyota">Toyota</option>
-                <option value="Renault">Renault</option>
+                <option value="Hyundai">Hyundai</option>
+                <option value="JAC">JAC</option>
+                <option value="Jeep">Jeep</option>
+                <option value="Kia">Kia</option>
+                <option value="Land Rover">Land Rover</option>
+                <option value="Mercedes-Benz">Mercedes-Benz</option>
+                <option value="Mitsubishi">Mitsubishi</option>
                 <option value="Nissan">Nissan</option>
                 <option value="Peugeot">Peugeot</option>
-                <option value="Citroën">Citroën</option>
-                <option value="BMW">BMW</option>
-                <option value="Mercedes-Benz">Mercedes-Benz</option>
-                <option value="Audi">Audi</option>
-                <option value="Hyundai">Hyundai</option>
-                <option value="Kia">Kia</option>
-                <option value="Jeep">Jeep</option>
-                <option value="Land Rover">Land Rover</option>
-                <option value="Volvo">Volvo</option>
-                <option value="Mitsubishi">Mitsubishi</option>
+                <option value="Renault">Renault</option>
                 <option value="Subaru">Subaru</option>
-                <option value="Chery">Chery</option>
-                <option value="JAC">JAC</option>
+                <option value="Toyota">Toyota</option>
+                <option value="Volkswagen">Volkswagen</option>
+                <option value="Volvo">Volvo</option>
               </select>
             </div>
             <div>
@@ -482,33 +482,33 @@
         paintingTotal: "0",
         // Lista de itens de serviço
         serviceItems: [
-          "Porta Dianteira Ld. Direito",
-          "Porta Traseira Ld. Direito",
-          "Porta Dianteira Ld. Esquerdo",
-          "Porta Traseira Ld.Esquerdo",
-          "Lateral Direita",
-          "Lateral Esquerda",
-          "Para-Lama Direito",
-          "Para-Lama Esquerdo",
-          "Capô",
-          "Painel Diant. c/Frente",
-          "Painel Traseiro. c/Tampa",
-          "Para-Choque Dianteiro",
-          "Para-Choque Traseiro",
-          "Farol c/Pisca Dianteiro",
-          "Lanterna Traseira",
-          "Tampa de Mala Traseira",
-          "Teto",
-          "Retrovisor Direito",
-          "Retrovisor Esquerdo",
-          "Vão de Roda",
-          "Longarina",
-          "Frisos",
-          "Borrachão",
-          "Maçaneta",
-          "Vidros",
-          "Assoalho de Mala",
-          "Churrasqueira"
+            "Assoalho de Mala",
+            "Borrachão",
+            "Capô",
+            "Churrasqueira",
+            "Farol c/Pisca Dianteiro",
+            "Frisos",
+            "Lanterna Traseira",
+            "Lateral Direita",
+            "Lateral Esquerda",
+            "Longarina",
+            "Maçaneta",
+            "Painel Diant. c/Frente",
+            "Painel Traseiro. c/Tampa",
+            "Para-Choque Dianteiro",
+            "Para-Choque Traseiro",
+            "Para-Lama Direito",
+            "Para-Lama Esquerdo",
+            "Porta Dianteira Ld. Direito",
+            "Porta Dianteira Ld. Esquerdo",
+            "Porta Traseira Ld. Direito",
+            "Porta Traseira Ld.Esquerdo",
+            "Retrovisor Direito",
+            "Retrovisor Esquerdo",
+            "Tampa de Mala Traseira",
+            "Teto",
+            "Vão de Roda",
+            "Vidros"
         ],
         bodyworkServices: [],
         paintingServices: []
@@ -707,117 +707,133 @@
 
         img.onload = function () {
           console.log("Imagem carregada com sucesso.");
+        
+          // Função para adicionar nova página
+          function addNewPage(doc) {
+            doc.addPage();
+            yPos = 20; // Resetar posição Y
+            // Adicionar cabeçalho básico em novas páginas
+            doc.setFontSize(10);
+            return yPos;
+          }
+      
+          // Adicionar cabeçalho principal
           doc.addImage(img, "PNG", 10, 10, 20, 20);
-
-          // Cabeçalho
           doc.setFontSize(16);
-          doc.text(
-            "Funilaria - Pintura - Polimento - Espelhamento",
-            105,
-            20,
-            { align: "center" }
-          );
+          doc.text("Funilaria - Pintura - Polimento - Espelhamento", 105, 20, { align: "center" });
           doc.setFontSize(12);
-          doc.text(
-            "Personalização - Pinturas de rodas - Polimento de faróis",
-            105,
-            30,
-            { align: "center" }
-          );
-          doc.text(
-            "R. Antónia Vieira Restolho, 250 - V. Zilda - CEP: 02318-460 - São Paulo",
-            105,
-            40,
-            { align: "center" }
-          );
+          doc.text("Personalização - Pinturas de rodas - Polimento de faróis", 105, 30, { align: "center" });
+          doc.text("R. Antónia Vieira Restolho, 250 - V. Zilda - CEP: 02318-460 - São Paulo", 105, 40, { align: "center" });
+      
+          // Informações do Cliente e Veículo
+          let yPos = 60;
+          const pageHeight = doc.internal.pageSize.height;
 
-          // Informações do Cliente
-          doc.text(`Data: ${state.date}`, 20, 60);
-          doc.text(`Nome: ${state.clientName}`, 20, 67);
-          doc.text(`End.: ${state.address}`, 20, 74);
-          doc.text(`Tel.: ${state.phone}`, 120, 74);
+          function checkPageBreak(y, lineHeight = 7) {
+            if (y + lineHeight > pageHeight - 20) {
+              y = addNewPage(doc);
+            }
+            return y;
+          }
+      
+          // Adicionar informações básicas
+          const clientInfo = [
+            { label: "Data", value: state.date, x: 20 },
+            { label: "Nome", value: state.clientName, x: 20 },
+            { label: "Endereço", value: state.address, x: 20 },
+            { label: "Telefone", value: state.phone, x: 20 }
+          ];
 
-          // Informações do Veículo
-          doc.text(`Ano: ${state.year}`, 20, 81);
-          doc.text(`Carro: ${state.car}`, 20, 88);
-          doc.text(`Marca: ${state.brand}`, 60, 88);
-          doc.text(`Cor: ${state.color}`, 120, 88);
-          doc.text(`Placa: ${state.plate}`, 160, 88);
+          const vehicleInfo = [
+            { label: "Ano", value: state.year, x: 130 },
+            { label: "Carro", value: state.car, x: 130 },
+            { label: "Marca", value: state.brand, x: 130 },
+            { label: "Cor", value: state.color, x: 130 },
+            { label: "Placa", value: state.plate, x: 130 }
+          ];
+
+          // Função para adicionar informações em colunas
+          function addInfoColumns(doc, infos, y) {
+              infos.forEach((info, index) => {
+                doc.text(`${info.label}: ${info.value}`, info.x, y + (index * 7));
+              });
+          }
+
+
+          // Adicionar informações do cliente e veículo lado a lado
+          addInfoColumns(doc, clientInfo, yPos);
+          addInfoColumns(doc, vehicleInfo, yPos);
+
+          // Ajustar posição Y para o próximo conteúdo
+          yPos += Math.max(clientInfo.length, vehicleInfo.length) * 7;
 
           // Tabelas de Serviços
-          let yPos = 100;
-          doc.setFontSize(10);
+          yPos += 10;
+          yPos = checkPageBreak(yPos, 15);
 
-          // Tabela de Funilaria (Item e Peças)
+          // Funilaria
           doc.setFontSize(14);
           doc.text("Funilaria:", 20, yPos);
           doc.setFontSize(10);
           yPos += 7;
+
           state.serviceItems.forEach((item, index) => {
             const bodywork = state.bodyworkServices[index];
-            // Exibe a linha se houver seleção ou se houver valor na tabela de Pintura
             if (bodywork.parts || state.paintingServices[index].value) {
+              yPos = checkPageBreak(yPos);
               doc.text(item, 20, yPos);
               doc.text(bodywork.parts || "", 80, yPos);
               yPos += 7;
             }
           });
-
-          // Tabela de Pintura
-          yPos += 5;
+      
+          // Pintura
+          yPos += 10;
+          yPos = checkPageBreak(yPos, 15);
           doc.setFontSize(14);
           doc.text("Pintura:", 20, yPos);
           doc.text("Valor", 80, yPos);
           doc.setFontSize(10);
           yPos += 7;
+      
           state.serviceItems.forEach((item, index) => {
             const painting = state.paintingServices[index];
             if (painting.value) {
+              yPos = checkPageBreak(yPos);
               doc.text(item, 20, yPos);
               doc.text(painting.value || "", 80, yPos);
               yPos += 7;
             }
           });
-
+      
           // Totais
           yPos += 10;
-          doc.text(`POLIMENTO R$: ${state.polishingValue}`, 20, yPos);
-          yPos += 7;
-          doc.text(`MÃO DE OBRA R$: ${state.laborValue}`, 20, yPos);
-          yPos += 7;
-          doc.text(`MONTAGEM E DESMONTAGEM R$: ${state.assemblyTotal}`, 20, yPos);
-          yPos += 7;
-          doc.text(`PINTURA R$: ${state.paintingTotal}`, 20, yPos);
-          yPos += 7;
-          doc.text(`VALOR TOTAL R$: ${state.totalValue}`, 20, yPos);
-          yPos += 7;
+          yPos = checkPageBreak(yPos, 50); // Espaço para os totais
 
-          // Meio de Pagamento
-          doc.text(`MEIO DE PAGAMENTO: ${state.paymentMethod}`, 20, yPos);
-          yPos += 7;
-          if (state.paymentMethod === "crédito") {
-            doc.text(`PARCELAS: ${state.installments}x`, 20, yPos);
+          const totals = [
+            `POLIMENTO R$: ${state.polishingValue}`,
+            `MÃO DE OBRA R$: ${state.laborValue}`,
+            `MONTAGEM E DESMONTAGEM R$: ${state.assemblyTotal}`,
+            `PINTURA R$: ${state.paintingTotal}`,
+            `VALOR TOTAL R$: ${state.totalValue}`
+          ];
+      
+          totals.forEach(total => {
+            yPos = checkPageBreak(yPos);
+            doc.text(total, 20, yPos);
             yPos += 7;
-          }
-
-          // Rodapé
-          doc.text(
-            `Garantia do Serviço: ${state.warranty} dias úteis`,
-            20,
-            yPos + 10
-          );
-          doc.text(
-            `Entrega prevista para: ${state.deliveryDate}`,
-            20,
-            yPos + 24
-          );
-          doc.text(`Obs.: ${state.observations}`, 20, yPos + 31);
-          doc.text("Orçamento válido por 60 dias.", 20, yPos + 38);
-          doc.text("ASS. CLIENTE", 20, yPos + 53);
-          doc.text("FUNILARIA", 170, yPos + 53);
-
+          });
+      
+          // Footer
+          yPos = checkPageBreak(yPos, 40);
+          doc.text(`Garantia do Serviço: ${state.warranty} dias úteis`, 20, yPos);
+          doc.text(`Entrega prevista para: ${state.deliveryDate}`, 20, yPos + 15);
+          doc.text(`Obs.: ${state.observations}`, 20, yPos + 30);
+          doc.text("Orçamento válido por 60 dias.", 20, yPos + 45);
+          doc.text("ASS. CLIENTE", 20, yPos + 60);
+          doc.text("FUNILARIA", 170, yPos + 60);
+      
           doc.save("ordem-servico.pdf");
-          console.log("PDF gerado com sucesso.");
         };
 
         img.onerror = function () {
