@@ -419,8 +419,8 @@
                 <option value="">Selecione</option>
                 <option value="pix">Pix</option>
                 <option value="débito">Débito</option>
-                <option value="outros">Outros</option>
                 <option value="crédito">Crédito</option>
+                <option value="outros">Outros</option>
               </select>
             </div>
           </div>
@@ -508,7 +508,8 @@
             "Tampa de Mala Traseira",
             "Teto",
             "Vão de Roda",
-            "Vidros"
+            "Vidros",
+            "Caixa de ar"
         ],
         bodyworkServices: [],
         paintingServices: []
@@ -833,7 +834,7 @@
           doc.text("ASS. CLIENTE", 20, yPos + 60);
           doc.text("FUNILARIA", 170, yPos + 60);
       
-          doc.save("ordem-servico.pdf");
+          doc.save("orçamento.pdf");
         };
 
         img.onerror = function () {
