@@ -121,6 +121,17 @@
         font-size: 0.875rem;
         transition: border-color 0.2s, box-shadow 0.2s;
       }
+      /* Evita que o Safari no iPhone aplique zoom ao focar inputs
+         garantindo que o tamanho de fonte computado seja >= 16px.
+         Colocado depois da regra genérica para sobrescrever 0.875rem. */
+      @supports (-webkit-touch-callout: none) {
+        input,
+        select,
+        textarea,
+        .search-container input {
+          font-size: 16px;
+        }
+      }
       input:focus,
       select:focus,
       textarea:focus {
