@@ -841,7 +841,26 @@
           doc.text("ASS. CLIENTE", 20, yPos + 60);
           doc.text("FUNILARIA", 170, yPos + 60);
       
-          doc.save("orçamento.pdf");
+          const pdfBlob = doc.output('blob');
+const pdfFile = new File([pdfBlob], "orçamento.pdf", { type: "application/pdf" });
+
+// Verifica se a API de compartilhamento está disponível
+if (navigator.share && navigator.canShare({ files: [pdfFile] })) {
+    navigator.share({
+        files: [pdfFile],
+        title: 'Orçamento de Serviço',
+        text: 'Segue o orçamento de serviço em anexo.'
+    }).then(() => {
+        console.log('PDF compartilhado com sucesso!');
+    }).catch((error) => {
+        console.error('Erro ao compartilhar:', error);
+        // Fallback para download caso o compartilhamento falhe ou não seja suportado
+        doc.save("orçamento.pdf");
+    });
+} else {
+    // Fallback para download em navegadores que não suportam a API de compartilhamento
+    doc.save("orçamento.pdf");
+}
         };
 
         img.onerror = function () {
